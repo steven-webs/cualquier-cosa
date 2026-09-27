@@ -1,0 +1,108 @@
+/* ===== Base ===== */
+:root {
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px)
+}
+
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px)
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font: 14px -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #faf9f5;
+  color: #141413
+}
+
+img {
+  max-width: 100%
+}
+
+[hidden]:not([hidden=until-found i]) {
+  display: none !important
+}
+
+/* ===== Escena ===== */
+:root {
+  color-scheme: light;
+  --bg: #f7c9d4;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+:root {
+  padding: 0 !important;
+}
+
+canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  display: block;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* ===== Letra sincronizada (sobre el césped, fondo transparente) ===== */
+.garden-lyrics {
+  position: fixed;
+  z-index: 10;
+  left: 50%;
+  top: 86%;
+  transform: translate(-50%, -50%);
+  width: min(420px, calc(100vw - 40px));
+  padding: 6px 12px;
+  background: transparent;
+  pointer-events: none;
+  text-align: center;
+  color: #7d2c4f;
+  font-weight: 600;
+  font: italic clamp(16px, 1.6vw, 22px)/1.6 Georgia, serif;
+  overflow-wrap: anywhere;
+  text-shadow:
+    0 0 3px #fff4f7,
+    0 0 8px rgba(255, 240, 245, 0.9),
+    0 1px 0 #ffe3ec;
+}
+
+#garden-lyrics-track { position: relative; }
+
+.garden-lyrics .lyric-character { opacity: 0; position: relative; }
+.garden-lyrics .lyric-character.is-visible { opacity: 1; }
+
+.garden-lyrics .has-cursor::after {
+  content: '_';
+  position: absolute;
+  left: 100%;
+  top: 0;
+  color: #7d2c4f;
+  font-style: normal;
+  animation: garden-cursor 800ms steps(1, end) infinite;
+}
+
+@keyframes garden-cursor { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* celular: un poco más arriba para no chocar con la barra del navegador */
+@media (max-width: 600px) {
+  .garden-lyrics {
+    top: calc(80% - env(safe-area-inset-bottom, 0px));
+    font-size: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .garden-lyrics .has-cursor::after { display: none; }
+}
